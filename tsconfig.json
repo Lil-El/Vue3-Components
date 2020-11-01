@@ -30,6 +30,9 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "story/**/*.vue", // 添加配置
+    "story/**/*.ts",
+    "story/**/*.tsx",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
