@@ -9,6 +9,7 @@ export const AppNavigatorPage = defineComponent({
     const navigator = injectAppNavigator();
     const utils = {
       reset: async () => {
+        console.log('reset:', navigator);
         let { path } = navigator.state.route;
         if (!path) { return void 0 }
         if (path.charAt(0) === '/') {
@@ -27,6 +28,5 @@ export const AppNavigatorPage = defineComponent({
         </div>
       )
     }
-    //TODO: https://gitee.com/speedly_admin/zhufeng-vue3ts-assembly202010/blob/master/part01/day02.md
   }
 })
