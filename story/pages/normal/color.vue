@@ -2,7 +2,7 @@
 <script>
 export default {
   render() {
-    return <div>Color</div>;
+    return <div>Color2</div>;
   },
 };
 </script>

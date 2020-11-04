@@ -1,10 +1,7 @@
 import { defineComponent, ref, computed } from "vue";
-import { designComponent } from '../../use/designComponent'
 import "./input.scss";
 
-// 旧版本：input-define.tsx
-// design版本
-export default designComponent({
+export default defineComponent({
   name: "pl-input",
   props: {
     status: { type: String, default: "primary" },
@@ -29,18 +26,12 @@ export default designComponent({
         modelValue.value = "";
       },
     };
-    return {
-      refer: {
-        methods,
-        modelValue
-      },
-      render: () => (
-        <div class={classes.value}>
-          <input class="pl-input-inner" type="text" v-model={modelValue.value} ref={inputRef} />
-          <button onClick={methods.clear}>clear</button>
-          <button onClick={() => methods.focus(true)}>focus</button>
-        </div>
-      )
-    }
+    return () => (
+      <div class={classes.value}>
+        <input class="pl-input-inner" type="text" v-model={modelValue.value} ref={inputRef} />
+        <button onClick={methods.clear}>clear</button>
+        <button onClick={() => methods.focus(true)}>focus</button>
+      </div>
+    )
   },
 });

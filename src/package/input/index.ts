@@ -1,9 +1,4 @@
-import { App } from "vue";
 import Input from "./input";
+import { installPlugins } from "../../utils/installPlugins";
 
-export default {
-  ...Input,
-  install(app: App) {
-    app.component(Input.name, Input);
-  },
-};
+export default installPlugins(Input);
