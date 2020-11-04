@@ -1,9 +1,10 @@
 <template>
-  <app-navigator defaultPath="normal/button">
+  <app-navigator defaultPath="normal/button" ref="navigator">
     <article class="app-home">
       <section
         class="app-header"
         :style="{ height: HomeConfig.headSize + 'px' }"
+        @click="goHome"
       >
         v3-component
       </section>
@@ -29,29 +30,52 @@
   </app-navigator>
 </template>
 
-<script>
+<script lang="ts">
 import { AppNavigator } from "./components/navigator/app-navigator";
 import { AppNavigatorPage } from "./components/navigator/app-navigator-page";
-import AppMenu from "./components/app/app-menu";
+import AppMenu from "./components/app/app-menu.vue";
+import { defineComponent, getCurrentInstance, resolveComponent } from "vue";
 
 const HomeConfig = {
   headSize: 60,
   menuSize: 300,
 };
-
-export default {
-  components: {
-    AppMenu,
-    AppNavigator,
-    AppNavigatorPage,
-  },
-  name: "app",
-  data() {
+/**
+ * @author yxd
+ * @description setup写法 - 不写defineComponent也可以
+ */
+export default defineComponent({
+  components: { AppMenu, AppNavigator, AppNavigatorPage },
+  setup() {
+    const instance = getCurrentInstance();
     return {
       HomeConfig,
+      goHome() {
+        (instance!.refs.navigator as any).$._refer.methods.go("/home");
+      },
     };
   },
-};
+});
+/**
+ * @author yxd
+ * @description 配置Options写法
+ */
+// export default defineComponent({
+//   name: "app",
+//   components: {
+//     AppMenu,
+//     AppNavigator,
+//     AppNavigatorPage,
+//   },
+//   data() {
+//     return { HomeConfig };
+//   },
+//   methods: {
+//     goHome() {
+//       (this.$refs.navigator as any).$._refer.methods.go("home");
+//     },
+//   },
+// });
 </script>
 <style lang="scss">
 html,

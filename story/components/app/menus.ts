@@ -22,10 +22,16 @@ export const MENUS: MenuGroup[] = [
         page: "/normal/button",
         complete: false,
       },
+      { name: "Grid", title: "布局", page: "/normal/grid", complete: false },
+    ],
+  },
+  {
+    name: "表单组件",
+    children: [
       {
-        name: "Layout",
-        title: "布局",
-        page: "/normal/layout",
+        name: "Input",
+        title: "输入框",
+        page: "/normal/input",
         complete: false,
       },
     ],

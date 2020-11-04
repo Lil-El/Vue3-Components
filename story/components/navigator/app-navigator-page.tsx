@@ -9,7 +9,7 @@ export const AppNavigatorPage = defineComponent({
     const navigator = injectAppNavigator();
     const utils = {
       reset: async () => {
-        console.log('reset:', navigator);
+
         let { path } = navigator.state.route;
         if (!path) { return void 0 }
         if (path.charAt(0) === '/') {

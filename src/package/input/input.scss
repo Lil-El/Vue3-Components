@@ -1,0 +1,25 @@
+@include theme {
+  .pl-input {
+    display: inline-block;
+
+    .pl-input-inner {
+      outline: none;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 2px;
+      font-size: 16px;
+    }
+
+    & > button {
+      height: 36px;
+    }
+
+    @include statusMixin(input) {
+      border: solid 1px $value;
+      background-color: mix($value, white, 10%);
+      .pl-input-inner:focus {
+        background-color: mix($value, white, 30%);
+      }
+    }
+  }
+}
