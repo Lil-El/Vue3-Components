@@ -23,7 +23,7 @@ export default defineComponent({
   name: "demo-input",
   setup() {
     const inputRef = Input.use.ref("myInput");
-
+    console.log(Input);
     return {
       outerClear: () => {
         inputRef.value!.methods.clear(); //组件内部定义了clear方法，绑定在refer上，在使用组件时调用组件内部的clear方法

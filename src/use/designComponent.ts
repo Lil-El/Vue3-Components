@@ -60,10 +60,10 @@ export function designComponent<
     } as any),
     use: {
       ref: (refName: string) => {
-        const ctx = (getCurrentInstance() as any).ctx;
+        const instance = (getCurrentInstance() as any).ctx;
         return {
           get value() {
-            return (ctx as any).$refs[refName].$._refer as Refer | null;
+            return (instance as any).$refs[refName].$._refer as Refer | null;
           },
         };
       },
