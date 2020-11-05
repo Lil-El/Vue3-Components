@@ -71,3 +71,9 @@ prefetch-index 以及 preload-index 两个插件，这个两个插件会在我�
 app-navigator 提供的对象，当点击菜单跳转的时候调用对象的路由跳转方法即可；
 
 #### 6：使用.vue 文件开发组件与 tsx 开发组件之间的区别优缺点
+
+## phase 1:
+
+#### 1：designComponent
+
+designComponent，通过这个函数，可以使得我们在获取组件的引用（ref）以及注入（inject）组件提供（provide）的数据时，自动获取正确的类型提示以及约束，**无需额外编写组件类型声明**。

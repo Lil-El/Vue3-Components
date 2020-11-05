@@ -2,6 +2,8 @@ import { defineComponent, ref, computed } from "vue";
 import { designComponent } from '../../use/designComponent'
 import "./input.scss";
 
+console.log('load Input Component');
+
 // 旧版本：input-define.tsx
 // design版本
 export default designComponent({

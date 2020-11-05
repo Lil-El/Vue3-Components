@@ -24,8 +24,8 @@
 </template>
 
 <script lang="ts">
-import { injectAppNavigator } from "../navigator/app-navigator";
 import { AppMenu, MENUS } from "./menus";
+import { AppNavigator } from "../navigator/app-navigator";
 
 export default {
   name: "app-menu",
@@ -33,7 +33,7 @@ export default {
     currentPath: { type: String },
   },
   setup() {
-    const navigator = injectAppNavigator();
+    const navigator = AppNavigator.use.inject();
 
     return {
       menus: MENUS,

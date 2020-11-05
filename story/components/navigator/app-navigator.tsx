@@ -1,12 +1,11 @@
-import { defineComponent, reactive, onBeforeUnmount, provide, inject, getCurrentInstance } from 'vue'
+import { reactive, onBeforeUnmount, provide, inject, getCurrentInstance } from 'vue'
+import { designComponent } from '../../../src/use/designComponent'
 
 interface Route {
   path?: string,
   hash?: string,
   param?: { [k: string]: string }
 }
-
-const APP_NAVIGATOR_PROVIDER = "@@app-navigator"
 
 /**
  * hash路由
@@ -21,48 +20,44 @@ function getRoute(): Route {
   return { path, hash }
 }
 
-function useAppNavigator(props: { defaultPath?: string }) {
-  const currentRoute = getRoute();
-  !currentRoute.path && (currentRoute.path = props.defaultPath)
-
-  const state = reactive({
-    route: currentRoute
-  });
-  const methods = {
-    go(path: string) {
-      window.location.hash = encodeURIComponent(path)
-    }
-  }
-  const handler = {
-    hashchange() {
-      state.route = getRoute();
-    }
-  }
-  const refer = {
-    state,
-    methods
-  }
-  window.addEventListener('hashchange', handler.hashchange)
-  onBeforeUnmount(() => window.removeEventListener('hashchange', handler.hashchange))
-
-  const ctx = getCurrentInstance();
-  (ctx as any)._refer = refer
-
-  provide(APP_NAVIGATOR_PROVIDER, refer)
-  return refer;
-}
-
-export function injectAppNavigator() {
-  return inject(APP_NAVIGATOR_PROVIDER) as ReturnType<typeof useAppNavigator>
-}
-
-export const AppNavigator = defineComponent({
+export const AppNavigator = designComponent({
   name: 'app-navigator',
+  provideRefer: true,
   props: {
     defaultPath: String
   },
   setup(props, context) {
-    useAppNavigator(props);
-    return () => !!context.slots.default ? context.slots.default() : null
+    let initRoute = getRoute();
+    if (!initRoute) initRoute = { path: props.defaultPath }
+    const state = reactive({ route: initRoute })
+    const utils = {
+      reset: () => {
+        const route = getRoute()
+        if (!!route) {
+          state.route = route
+        }
+      }
+    }
+    const handler = {
+      hashchange: () => utils.reset()
+    }
+    const methods = {
+      go: (path: string) => {
+        window.location.hash = encodeURIComponent(path)
+      }
+    }
+
+    window.addEventListener('hashchange', handler.hashchange)
+
+    onBeforeUnmount(() => window.removeEventListener('hashchange', handler.hashchange))
+
+    const refer = {
+      state,
+      methods,
+    }
+    return {
+      refer,
+      render: () => !!context.slots.default ? context.slots.default() : null
+    }
   }
 })
