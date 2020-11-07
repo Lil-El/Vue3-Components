@@ -72,8 +72,37 @@ app-navigator 提供的对象，当点击菜单跳转的时候调用对象的路
 
 #### 6：使用.vue 文件开发组件与 tsx 开发组件之间的区别优缺点
 
-## phase 1:
+## phase 2:
 
 #### 1：designComponent
 
 designComponent，通过这个函数，可以使得我们在获取组件的引用（ref）以及注入（inject）组件提供（provide）的数据时，自动获取正确的类型提示以及约束，**无需额外编写组件类型声明**。
+
+#### 2：打包rollup、webpack
+- Vue不需要打包，所以要排除掉
+- 格式为umd
+- rollup：
+  - exports：导出的内容
+  - name：配置导出的名字
+  - format：导出的格式
+- webpack:
+  - library：配置导出的名字
+  - libraryTarget：导出的格式
+  - libraryExport：导出的内容
+>打包后的测试文件在public中html
+
+#### 3：package.json
+- typings：配置对象参数类型
+
+#### 4：组件库发布后，使用
+**usage**
+
+- 1. 全局引入
+- 2. 按需加载
+  - babel.config.js
+- 3. 自定义主题
+  - 3.1. 在vue.config.js中引入入口scss文件（无需在main.ts中引入）
+  - 3.2. 在入口scss文件中，引入其他scss文件，并引入组件库的scss文件
+  - 3.3. 在主题scss文件中，配置不同的主题
+- 4. 自定义组件适配主题
+  - 自定义组件card，其scss文件，使用了statusMixin，所以格式为pl-{name}-status-{status}的类名可以适配主题样式

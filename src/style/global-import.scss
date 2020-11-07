@@ -2,11 +2,20 @@
 @import "./main";
 
 $themes: map_merge($theme-default, $theme-blue);
-
+// $themes: blue violet ""
 @mixin theme {
   @each $curThemeName, $curTheme in $themes {
+    // theme-blue {}
+    // theme-violet {}
+    // html {}
     @include generateThemeContent($curThemeName, $curTheme) {
+      // 每次遍历获取对应主题的colorPrimary，colorError等
       @content;
+      // 混入statusMixin会生成 .pl-{component}-status-{name}；其中的颜色为上面的colorError等。
+      // .pl-button
+      // .pl-button .pl-button-status-error
+      // .pl-button .pl-button-status-success
+      // ......
     }
   }
 }

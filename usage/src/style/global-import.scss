@@ -1,0 +1,12 @@
+@import "../../node_modules/v3-components-wsj/src/style/main";
+@import "my-theme";
+
+$themes: map_merge($theme-default, $custom-theme);
+
+@mixin theme {
+  @each $curThemeName, $curTheme in $themes {
+    @include generateThemeContent($curThemeName, $curTheme) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link rel="stylesheet" href="../dest/index.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@next"></script>
+    <script src="../dest/index.js"></script>
+
+    <script>
+      console.log(window.V3ComponentsWsj);
+      console.log(window.vue);
+      const app = window.Vue.createApp({
+        template: `
+            <div>
+                <pl-button label="label"></pl-button>
+                <pl-button>插槽内容</pl-button>
+
+                <pl-input/>
+                <pl-input status="error" ref="myInput"/>
+                <button @click="outerFocus">outerFocus</button>
+            </div>
+        `,
+        setup() {
+          const inputRef = window.V3ComponentsWsj.Input.use.ref("myInput");
+
+          return {
+            outerFocus() {
+              inputRef.value.methods.focus(false);
+            },
+          };
+        },
+      });
+
+      app.use(window.V3ComponentsWsj);
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

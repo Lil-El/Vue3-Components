@@ -1,0 +1,23 @@
+@include theme {
+  .pl-my-card {
+    display: inline-block;
+
+    .pl-my-card-header {
+      padding: 8px 16px;
+    }
+
+    .pl-my-card-content {
+      padding: 20px 16px;
+    }
+
+    @include statusMixin(my-card) {
+
+      border: solid $value;
+      margin: 8px;
+      .pl-my-card-header {
+        background-color: $value;
+        color: white;
+      }
+    }
+  }
+}
