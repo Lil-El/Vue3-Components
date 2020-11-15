@@ -17,16 +17,24 @@
 
 <script lang="ts">
 import { Input } from "../../../src";
-import { defineComponent } from "vue";
+import { defineComponent, getCurrentInstance, onMounted } from "vue";
 
 export default defineComponent({
   name: "demo-input",
   setup() {
+    // 1使用Input组件实例的refs
     const inputRef = Input.use.ref("myInput");
-    console.log(Input);
+
+    // 2使用当前实例的refs，
+    let inputref: any;
+    onMounted(() => {
+      inputref = getCurrentInstance()!.refs["myInput"] as any;
+    });
     return {
       outerClear: () => {
-        inputRef.value!.methods.clear(); //组件内部定义了clear方法，绑定在refer上，在使用组件时调用组件内部的clear方法
+        console.log(inputref);
+        inputref.methods.clear();
+        // inputRef.value!.methods.clear(); //组件内部定义了clear方法，绑定在refer上，在使用组件时调用组件内部的clear方法
       },
       outerFocus: () => {
         inputRef.value!.methods.focus(false);

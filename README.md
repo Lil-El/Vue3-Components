@@ -78,9 +78,42 @@ app-navigator 提供的对象，当点击菜单跳转的时候调用对象的路
 
 designComponent，通过这个函数，可以使得我们在获取组件的引用（ref）以及注入（inject）组件提供（provide）的数据时，自动获取正确的类型提示以及约束，**无需额外编写组件类型声明**。
 
-#### 2：打包rollup、webpack
-- Vue不需要打包，所以要排除掉
-- 格式为umd
+> Note:
+>
+> ----------vue3-----------
+>
+> Input 组件：
+>
+> 在 vue 文件使用时定义其 ref 名称 **plan-input ref="1"**
+>
+> 在 Input 组件内部将方法绑定到实例的 proxy 上，并且可以获取所有的 refs **getInstance().refs**
+>
+> 然后获取具体的 input 实例后，再通过组件内的 ref 引用获取到 input 输入框的实例，去执行相应的方法 **Input.use.ref('1').methods.clear()**
+>
+> ----------vue3-----------
+>
+> Input 组件：
+>
+> 在 vue 文件使用时定义其 ref 名称 **plan-input ref="1"**
+>
+> 在 Input 组件内部将方法绑定到实例的 proxy 上
+>
+> 获取 vue 文件的 instance（onMounted），拿到对应的 refs，并调用其方法
+>
+> ----------vue2-----------
+>
+> Input 组件：
+>
+> 在 vue 文件使用时定义 ref 名称 **plan-input ref="1"**
+>
+> 在 Input 组件内获取不到所有的，但可以获取当前的引用
+>
+> vue 文件获取\$refs.1，通过 input 组件的方法获取 input 实例
+
+#### 2：打包 rollup、webpack
+
+- Vue 不需要打包，所以要排除掉
+- 格式为 umd
 - rollup：
   - exports：导出的内容
   - name：配置导出的名字
@@ -89,20 +122,22 @@ designComponent，通过这个函数，可以使得我们在获取组件的引�
   - library：配置导出的名字
   - libraryTarget：导出的格式
   - libraryExport：导出的内容
->打包后的测试文件在public中html
+    > 打包后的测试文件在 public 中 html
 
 #### 3：package.json
+
 - typings：配置对象参数类型
 
 #### 4：组件库发布后，使用
+
 **usage**
 
 - 1. 全局引入
 - 2. 按需加载
   - babel.config.js
 - 3. 自定义主题
-  - 3.1. 在vue.config.js中引入入口scss文件（无需在main.ts中引入）
-  - 3.2. 在入口scss文件中，引入其他scss文件，并引入组件库的scss文件
-  - 3.3. 在主题scss文件中，配置不同的主题
+  - 3.1. 在 vue.config.js 中引入入口 scss 文件（无需在 main.ts 中引入）
+  - 3.2. 在入口 scss 文件中，引入其他 scss 文件，并引入组件库的 scss 文件
+  - 3.3. 在主题 scss 文件中，配置不同的主题
 - 4. 自定义组件适配主题
-  - 自定义组件card，其scss文件，使用了statusMixin，所以格式为pl-{name}-status-{status}的类名可以适配主题样式
+  - 自定义组件 card，其 scss 文件，使用了 statusMixin，所以格式为 pl-{name}-status-{status}的类名可以适配主题样式
