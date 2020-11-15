@@ -1,6 +1,6 @@
 export interface AppMenu {
   name: string;
-  title: string;
+  title?: string;
   page: string;
   complete?: boolean;
 }
@@ -11,6 +11,17 @@ export interface MenuGroup {
 }
 
 export const MENUS: MenuGroup[] = [
+  {
+    name: "组合函数",
+    children: [
+      { name: "useEvent", page: "/use/useEvent/demo-use-event" },
+      {
+        name: "useModel",
+        page: "/use/useModel/demo-use-model",
+        complete: true,
+      },
+    ],
+  },
   {
     name: "基础",
     children: [

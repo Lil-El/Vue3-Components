@@ -26,7 +26,7 @@ export const AppNavigator = designComponent({
   props: {
     defaultPath: String
   },
-  setup(props, context) {
+  setup({ props, setupContext }) {
     let initRoute = getRoute();
     if (!initRoute) initRoute = { path: props.defaultPath }
     const state = reactive({ route: initRoute })
@@ -57,7 +57,9 @@ export const AppNavigator = designComponent({
     }
     return {
       refer,
-      render: () => !!context.slots.default ? context.slots.default() : null
+      render: () => {
+        return !!setupContext.slots.default ? setupContext.slots.default() : null
+      }
     }
   }
 })

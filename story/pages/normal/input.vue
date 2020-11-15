@@ -3,6 +3,7 @@
     <pl-input />
     <h4>状态</h4>
     <pl-input
+      v-model="state.text"
       v-for="item in ['primary', 'success', 'warn', 'error', 'info']"
       :key="item"
       :status="item"
@@ -17,14 +18,19 @@
 
 <script lang="ts">
 import { Input } from "../../../src";
-import { defineComponent, getCurrentInstance, onMounted } from "vue";
+import { defineComponent, getCurrentInstance, onMounted, reactive } from "vue";
 
 export default defineComponent({
   name: "demo-input",
   setup() {
+    const state = reactive({
+      text: "hello world",
+    });
+    /**
+     * use.ref的作用之一：获取组件的引用和引用类型
+     */
     // 1使用Input组件实例的refs
     const inputRef = Input.use.ref("myInput");
-
     // 2使用当前实例的refs，
     let inputref: any;
     onMounted(() => {
@@ -39,6 +45,7 @@ export default defineComponent({
       outerFocus: () => {
         inputRef.value!.methods.focus(false);
       },
+      state,
     };
   },
 });

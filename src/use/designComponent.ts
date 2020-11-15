@@ -7,6 +7,8 @@ import {
   provide,
   inject,
 } from "vue";
+import { ComponentEvent, getComponentEmit, useEvent } from "./useEvent";
+
 /**
  * 泛型：PropsOptions、Props从源码得知
  * ExtractPropTypes：抽离属性类型
@@ -15,33 +17,37 @@ import {
 export function designComponent<
   PropsOptions extends Readonly<ComponentPropsOptions>,
   Props extends Readonly<ExtractPropTypes<PropsOptions>>,
+  Emits extends { [k: string]: (...args: any[]) => boolean },
   Refer
 >(options: {
   name?: string;
   props?: PropsOptions;
   provideRefer?: boolean;
-  setup: (
-    props: Props,
-    setupContext: SetupContext
-  ) => {
+  emits?: Emits;
+  setup: (parameter: {
+    props: Props;
+    event: ComponentEvent<Emits>;
+    setupContext: SetupContext<Emits>;
+  }) => {
     refer?: Refer;
     render: () => any;
   };
 }) {
-  const { setup, provideRefer, ...leftOptions } = options;
+  const { setup, provideRefer, emits, ...leftOptions } = options;
 
   return {
     ...defineComponent({
       ...leftOptions,
-      setup(props: Props, setupContext: SetupContext) {
+      emits: getComponentEmit(emits),
+      setup(props: Props, setupContext: any) {
         const instance = getCurrentInstance() as any;
-
+        const event = useEvent<Emits>(emits!);
         if (!setup) {
           console.error("designComponent: setup is required!");
           return () => null;
         }
 
-        const { refer, render } = setup(props, setupContext);
+        const { refer, render } = setup({ props, event, setupContext });
         if (!!refer) {
           const duplicateKey = Object.keys(leftOptions.props || {}).find((i) =>
             Object.prototype.hasOwnProperty.call(refer as any, i)
